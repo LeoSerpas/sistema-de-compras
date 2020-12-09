@@ -1,9 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head>
-</head>
-<body>
-	<h1><b>Cantidad de órdenes de compra asignadas por proveedor con su monto respectivo</b></h1>
-    <br>
-</body>
+   <head></head>
+   <body>
+      <h1><b>Cantidad de órdenes de compra asignadas por proveedor con su monto respectivo</b></h1>
+      <br>
+      <table class="table table-bordered">
+         <thead>
+            <tr>
+               <td>Nombre de Proveedor</td>
+               <td>Precio acumulado</td>
+               <td>Cantidad de Órdenes de Compra</td>
+            </tr>
+         </thead>
+         <tbody>
+            {% if orden %}
+            {% for ordenes in orden %}
+            <tr>
+               <td> {{ordenes.nombre}}</td>
+               <td> {{ordenes.precio}}</td>
+               <td> {{ordenes.cuenta}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+         </tbody>
+      </table>
+   </body>
 </html>
