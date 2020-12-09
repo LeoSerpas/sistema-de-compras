@@ -43,9 +43,9 @@ class Oferta(models.Model):
 
 class Inventario(models.Model):
     #id default
-    id_articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE, db_column= 'id_articulos')
     existencia = models.IntegerField()
-    id_remision = models.ForeignKey('compras.NotaRemision', on_delete= models.CASCADE, db_column='id_remision')    
+    costo_promedio = models.FloatField(default=None)
+    id_articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE, db_column= 'id_articulos')
 
     class Meta:
         db_table = 'Inventario'
@@ -55,4 +55,21 @@ class Inventario(models.Model):
 
     def __str__(self):
         return '%s' % (self.id_articulo)
+
+class Movimiento(models.Model):
+    #id default
+    cantidad = models.IntegerField()
+    tipo = models.BooleanField()
+    costo = models.FloatField(default=None)
+    fecha = models.DateTimeField(auto_now_add=True)
+    id_inventario = models.ForeignKey(Inventario, on_delete= models.CASCADE, db_column='id_inventario')    
+
+    class Meta:
+        db_table = 'Movimiento'
+        verbose_name = 'Movimiento'
+        verbose_name_plural = 'Movimiento'
+        default_permissions = []
+
+    def __str__(self):
+        return '%s' % (self.id_inventario)
 

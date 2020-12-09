@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+<script src="{% static 'dist/js/jsInventario/indexInventario.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+<!-- Varible que dispara los sweet alerts -->
+<ul>
+    {% for message in messages %}
+    <input type="text" name="opt" id="opt" value="{{ message }}" hidden>
+    {% endfor %}
+</ul>
+<!-- Varible que dispara los sweet alerts fin -->
+{% endif %}
+<br>
+<br>
+<br>
+<div class="row">
+    <div class="col-10 offset-1">
+        <div class="card card-dark">
+            <div class="card-header">
+                Inventario 
+            </div>
+            <div class="card-body">
+                <br>
+                <div class="row">
+                    <div class="col align-self-center">
+                        <div class="table-responsive">
+                            <table class="table display table-bordered table-striped" name="indexInventario"
+                                id="indexInventario">
+                                <thead class="bg-secondary">
+                                    <tr>
+                                        <td>Articulo</td>
+                                        <td>Existencia</td>
+                                        <td>Costo Promedio</td>
+                                        <td>Opciones</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% if inventarios %}
+                                    {% for inventario in inventarios %}
+                                    <tr>
+                                        <td> {{ inventario.id_articulo.nombre }}</td>
+                                        <td> {{ inventario.existencia}}</td>
+                                        <td> {{ inventario.costo_promedio}}</td>
+                                        <td>
+                                            <div class="">
+                                                <a href="{% url 'indexMovimiento' inventario.id %}" class="btn btn-sm btn-success">Detalle</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

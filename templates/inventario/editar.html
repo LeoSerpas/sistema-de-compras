@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+<script src="{% static 'dist/js/jsEmpresaProveedora/editarEmpresaProveedora.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-8 offset-2 ">
+            <div class="card card-dark">
+
+                <div class="card-header with-border">
+                    Editar empresa proveedora.
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <form method="post" name="formularioEditar">
+                                {% csrf_token %}
+                                <div class="row form-group">
+                                    <div class="input-group col-lg-10 offset-lg-1 ">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Nombre proveedor</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="nombre" name="nombre"
+                                        placeholder="Ingrese el nombre de la empresa proveedora" value="{{ empresaProveedora.nombre }}" required>
+                                    </div>
+                                </div>   
+                                <div class="row form-group">
+                                    <div class="input-group col-lg-10 offset-lg-1 ">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Telefono</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="telefono" name="telefono" 
+                                        placeholder="Ingrese el número de la empresa proveedora"
+                                        data-inputmask='"mask": "9999-9999"' data-mask value="{{ empresaProveedora.telefono }}" required>
+                                    </div>
+                                </div> 
+                                <div class="row form-group">
+                                    <div class="input-group col-lg-10 offset-lg-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Dirección</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="direccion" name="direccion"
+                                            placeholder="Ingrese la dirección de la empresa proveedora" value="{{ empresaProveedora.direccion }}" required>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="input-group col-lg-10 offset-lg-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Departamento</span>
+                                        </div>
+                                        <select class="custom-select" id="departamento" name="departamento" required>
+                                            <option value="" selected disabled>Elija el departamento</option>
+                                            {% if departamentos %}
+                                            {% for depart in departamentos %}
+                                            {% if empresaProveedora.depa_id_id == depart.id  %}
+                                            <option value="{{ depart.id }}" selected>{{ depart.nombreDepartamento }}
+                                            </option>
+                                            {% endif %}
+                                            <option value="{{ depart.id }}">{{ depart.nombreDepartamento }}</option>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="input-group col-lg-10 offset-lg-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Municipio</span>
+                                        </div>
+                                        <select class="custom-select" id="municipio" name="municipio" required>
+                                            <option value="" selected disabled>Elija el municipio</option>
+                                            {% if municipios %}
+                                            {% for muni in municipios %}
+                                            {% if empresaProveedora.municipio_id_id == muni.id  %}
+                                            <option value="{{ muni.id }}" selected>{{ muni.nombreMunicipio }}</option>
+                                            {% endif %}
+                                            <option value="{{ muni.id }}" data-region="{{ muni.departamento_id_id }}">
+                                                {{ muni.nombreMunicipio }}</option>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="input-group col-lg-10 offset-lg-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Usuario</span>
+                                        </div>
+                                        <select class="custom-select" id="usersis" name="usersis" required>
+                                            <option value="{{empresaProveedora.auth_id_id}}" selected>
+                                                {{empresaProveedora.auth_id.first_name}}
+                                            </option>
+                                            {% if usuarios %}
+                                            {% for userdispo in usuarios %}
+                                            <option value="{{ userdispo.id }}">{{ userdispo.first_name }}</option>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                </div>            
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4 offset-lg-7 text-right">
+                            <a href="{% url 'indexEmpresaProveedora' %}" role="button" class="btn btn-danger">Cancelar</a>
+                            <button type="submit" id="guardar" name="guardar" class="btn btn-info">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

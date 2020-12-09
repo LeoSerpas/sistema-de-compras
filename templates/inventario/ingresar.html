@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+<script src="{% static 'dist/js/jsInventario/ingresarMovimiento.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-8 offset-2 ">
+            <div class="card card-dark">
+
+                <div class="card-header with-border">
+                    Movimiento de inventario.
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <form method="post" name="formulario">
+                                {% csrf_token %}
+                                <div class="row form-group">
+                                    <div class="input-group col-lg-10 offset-lg-1 ">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Articulo</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="articulo" name="articulo" 
+                                         value="{{ inventario.id_articulo.nombre }}" disabled>
+                                    </div>
+                                </div>   
+                                <div class="row form-group">
+                                    <div class="input-group col-lg-10 offset-lg-1 ">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Cantidad</span>
+                                        </div>
+                                        <input type="number" class="form-control" id="cantidad" name="cantidad"
+                                            placeholder="Ingrese cantidad de articulos" required>
+                                    </div>
+                                </div> 
+                                <div class="row form-group">
+                                    <div class="input-group col-lg-10 offset-lg-1 ">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Costo Unitario</span>
+                                        </div>
+                                        <input type="number" class="form-control" id="costo_unitario" name="costo_unitario"
+                                            placeholder="Ingrese costo de articulos" required>
+                                    </div>
+                                </div> 
+                                <div class="row form-group">
+                                    <div class="input-group col-lg-10 offset-lg-1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Tipo</span>
+                                        </div>
+                                        <select class="custom-select" id="tipo" name="tipo" required>
+                                            <option value="" selected disabled>Elija tipo movimiento</option>
+                                            <option value="1">Entrada</option>
+                                            <option value="0">Salida</option>
+                                        </select>
+                                    </div>
+                                </div>    
+                                <input type="hidden" class="form-control" id="fecha" name="fecha" value=" {% now "AAAA-MM-DD" %} ">           
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4 offset-lg-7 text-right">
+                            <a href="{% url 'indexInventario' %}" role="button" class="btn btn-danger">Cancelar</a>
+                            <button type="submit" id="guardar" name="guardar" class="btn btn-info">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+<script src="{% static 'dist/js/jsInventario/indexInventario.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+<!-- Varible que dispara los sweet alerts -->
+<ul>
+    {% for message in messages %}
+    <input type="text" name="opt" id="opt" value="{{ message }}" hidden>
+    {% endfor %}
+</ul>
+<!-- Varible que dispara los sweet alerts fin -->
+{% endif %}
+<br>
+<br>
+<br>
+<div class="row">
+    <div class="col-10 offset-1">
+        <div class="card card-dark">
+            <div class="card-header">
+                Movimientos en inventario 
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="">
+                        <h2><b>Articulo</b> : {{ inventario.id_articulo.nombre }} </h2>
+                    </div>
+                    <div class="col-lg-2 offset-lg-10 text-right">
+                        <a class="btn btn-info" href="{% url 'movimiento_crear' inventario.id %}" role="button"> <i class="fa fa-plus"
+                                aria-hidden="true"></i>
+                            Agregar</a>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col align-self-center">
+                        <div class="table-responsive">
+                            <table class="table display table-bordered table-striped" name="indexInventario"
+                                id="indexMovimiento">
+                                <thead class="bg-secondary">
+                                    <tr>
+                                        <td>Fecha</td>
+                                        <td>Tipo</td>
+                                        <td>Cantidad</td>
+                                        <td>Costo Unitario</td>
+                                        <td>Opciones</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% if movimientos %}
+                                    {% for movimiento in movimientos %}
+                                    <tr>
+                                        <td> {{ movimiento.fecha }}</td>
+                                        <td> 
+                                        {% if movimiento.tipo == 1 %}
+                                            E
+                                        {% elif movimiento.tipo == 0 %}
+                                            S                                     
+                                        {% endif %}
+                                        </td>
+                                        
+                                        <td> {{ movimiento.cantidad}}</td>
+                                        <td> {{ movimiento.costo}}</td>
+                                        <td>
+                                            <div class="">
+                                                <a href="{% url 'movimiento_eliminar' movimiento.id %}" class="btn btn-sm btn-danger">Eliminar</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
