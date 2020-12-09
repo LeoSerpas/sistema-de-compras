@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+<script src="{% static 'dist/js/jscompras/indexCompras.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+<!-- Varible que dispara los sweet alerts -->
+<ul>
+    {% for message in messages %}
+    <input type="text" name="opt" id="opt" value="{{ message }}" hidden>
+    {% endfor %}
+</ul>
+<!-- Varible que dispara los sweet alerts fin -->
+{% endif %}
+<br>
+<br>
+<br>
+<div class="row">
+    <div class="col-lg-10 offset-lg-1">
+        <div class="card card-dark">
+            <div class="card-header">
+                Listado de requisicion|Generar orden de compra.
+            </div>
+            <div class="card-body">
+                <br>
+                <div class="row">
+                    <div class="col align-self-center">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped" id="indexRequisicion">
+                                <thead class="bg-secondary">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Fecha pedido</th>
+                                        <th>Fecha entrega</th>
+                                        <th>Departamento</th>
+                                        <th>Actual</th>
+                                        <th>Estado</th>
+                                        <td>Opciones</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if requision %}
+                                    {% for requi in requision %}
+                                    <tr>
+                                        <td>{{requi.id}}</td>
+                                        <td>{{requi.fecha_pedido|date:'d-M-Y'}}</td>
+                                        <td>{{requi.fecha_entrega|date:'d-M-Y'}}</td>
+                                        <td>{{requi.id_departamento.nombre}}</td>
+                                        <td>{{requi.comprahecha}}</td>
+                                        <td>{{requi.estado}}</td>
+                                        <td>
+                                            
+                                            <div>
+                                                <a href="{% url 'detalle_requisicion3' requi.id %}"
+                                                    class="btn btn-sm btn-success">
+                                                    Generar orden
+                                                </a>
+                                            
+                                                
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

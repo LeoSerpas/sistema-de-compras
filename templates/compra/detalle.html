@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+<script src="{% static 'dist/js/jsrequisicion/editarRequisicion.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-10 offset-1 ">
+            <div class="card card-dark">
+
+                <div class="card-header with-border">
+                    <h5>Generar Orden de compra.</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Inicio del form -->
+                            <form method="post" name="form_edit" >
+                                {% csrf_token %}
+                                <!-- Inicio del div de Estado -->
+                                <div class="card card-secondary card-outline border-secondary mb-3 col-lg-10 offset-lg-1">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            <h5>Departamento: {{ requision.id_departamento.nombre }} </h5> 
+                                            <h5>Estado: {{ requision.estado }}</h5>
+                                        </h3>
+                                    </div>
+                                    <br>
+                                    <!-- Fecha de pedido -->
+                                    <div class="row form-group">
+                                        <div class="input-group col-lg-10 offset-lg-1 ">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Fecha Pedido</span>
+                                            </div>
+                                            <input type="date" class="form-control" id="fecha_pedido" name="fecha_pedido"
+                                                data-mask="" value="{{requision.fecha_pedido|date:'yy-m-d'}}" Disabled >
+                                        </div>
+                                    </div>
+                                    <!-- Fecha de Entrega -->
+                                    <div class="row form-group">
+                                        <div class="input-group col-lg-10 offset-lg-1 ">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Fecha de Entrega</span>
+                                            </div>
+                                            <input type="date" class="form-control" id="fecha_entrega" name="fecha_entrega"
+                                                data-mask="" value="{{ requision.fecha_entrega|date:'yy-m-d' }}" Disabled>
+                                        </div>
+                                    </div>
+
+                                    
+                            <div class="card-header">
+                                <h5>Listado articulos para requesición.</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table" id="tableArticulosRequisicion" name="tableArticulosRequisicion" style="width: 100%;">
+                                        <thead class="bg-secondary">
+                                            <tr>
+                                                <td>Serial </td>
+                                                <td>Articulo </td>
+                                                <td>Modelo</td>
+                                                <td>Cantidad </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if rearticulo %}
+                                            {% for rec in rearticulo %}
+                                            <tr>
+                                                <td>{{rec.articulo.serial}}</td>
+                                                <td>{{rec.articulo.nombre}}</td>
+                                                <td>{{rec.articulo.modelo}}</td>
+                                                <td>{{rec.cantidad_pedido}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>                   
+                            </form>
+                            <!-- Fin del form -->
+          <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <form method="post" name="form_ingresar" >
+                                {% csrf_token %}
+                                <div class="row form-group">
+                                    <div class="input-group col-lg-10 offset-lg-1 ">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Fecha de orden</span>
+                                        </div>
+                                        <input type="date" class="form-control" id="fecha_orden" name="fecha_orden" data-mask="" required>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="input-group col-lg-10 offset-lg-1 ">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Fecha de entrega</span>
+                                        </div>
+                                        <input type="date" class="form-control" id="fecha_entrega" name="fecha_entrega" data-mask="" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-10 offset-lg-1">
+                                        <label>Seleccione Articulos ofertados</label>
+                                        <table class="table" id="tablaOfertas" name="tablaOfertas">
+                                            <thead class="bg-info">
+                                            <tr>
+                                                <td>Nombre</td>
+                                                <td>Marca</td>
+                                                <td>Modelo</td>
+                                                <td>Precio</td>
+                                                <td>descuento</td>
+                                                <td>Fecha inicio</td>
+                                                <td>Fecha fin</td>
+                                                <td>Opciones</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% if oferta %}
+                                            {% for ofer in oferta %}
+                                            <tr>
+                                                <td>{{ofer.id_articulo.nombre}} </td>
+                                                <td>{{ofer.id_articulo.marca}} </td>
+                                                <td>{{ofer.id_articulo.modelo}} </td>
+                                                <td>{{ofer.precio}} </td>
+                                                <td>{{ofer.descuento}} </td>
+                                                <td>{{ofer.fecha_inicio}} </td>
+                                                <td>{{ofer.fecha_fin}} </td>
+                                                <td>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            <input type="checkbox" class="form-check-input" name="ofertas" id="{{ofer.id}}"
+                                                                   value="{{ofer.id}}">
+                                                            Seleccionar
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                            {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4 offset-lg-7 text-right">
+                                        <a href="{% url 'indexcompras' %}" role="button" class="btn btn-danger">Cancelar</a>
+                                        <button type="submit" id="guardar" name="guardar" class="btn btn-info">Guardar</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

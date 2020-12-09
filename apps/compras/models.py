@@ -10,6 +10,7 @@ class RequesionCompra(models.Model):
     fecha_pedido = models.DateField()
     fecha_entrega = models.DateField()
     estado = models.CharField(max_length=30)
+    comprahecha = models.CharField(max_length=30)
 
     class Meta:
         db_table = 'Requisicion'
@@ -29,7 +30,7 @@ class RequesicionArticulo(models.Model):
 class ordenCompra(models.Model):
     #Id default
     id_requisicion = models.ForeignKey(RequesionCompra, on_delete= models.CASCADE, db_column='id_requisicion')
-    id_oferta = models.ForeignKey(Oferta, on_delete= models.CASCADE, db_column='id_oferta')
+    ofertas = models.ManyToManyField(Oferta)
     precio_total = models.FloatField()
     fecha_orden = models.DateField()
     fecha_entrega = models.DateField()

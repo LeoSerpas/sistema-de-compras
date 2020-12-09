@@ -15,7 +15,7 @@
             <div class="card card-dark">
 
                 <div class="card-header with-border">
-                    <h5>Editar Requisicion.</h5>
+                    <h5>Datos de Requisicion.</h5>
                 </div>
 
                 <div class="card-body">
@@ -28,8 +28,8 @@
                                 <div class="card card-secondary card-outline border-secondary mb-3 col-lg-10 offset-lg-1">
                                     <div class="card-header">
                                         <h3 class="card-title">
-                                            <h5>Departamento: {{ empleado.id_departamento.nombre }} </h5> 
-                                            <h5>Estado: Solicitado</h5>
+                                            <h5>Departamento: {{ requision.id_departamento.nombre }} </h5> 
+                                            <h5>Estado: {{ requision.estado }}</h5>
                                         </h3>
                                     </div>
                                     <br>
@@ -40,7 +40,7 @@
                                                 <span class="input-group-text">Fecha Pedido</span>
                                             </div>
                                             <input type="date" class="form-control" id="fecha_pedido" name="fecha_pedido"
-                                                data-mask="" value="{{requision.fecha_pedido|date:'yy-m-d'}}" >
+                                                data-mask="" value="{{requision.fecha_pedido|date:'yy-m-d'}}" Disabled >
                                         </div>
                                     </div>
                                     <!-- Fecha de Entrega -->
@@ -50,17 +50,50 @@
                                                 <span class="input-group-text">Fecha de Entrega</span>
                                             </div>
                                             <input type="date" class="form-control" id="fecha_entrega" name="fecha_entrega"
-                                                data-mask="" value="{{ requision.fecha_entrega|date:'yy-m-d' }}">
+                                                data-mask="" value="{{ requision.fecha_entrega|date:'yy-m-d' }}" Disabled>
                                         </div>
                                     </div>
-                                    <!-- Botones -->
+
+                                    
+                            <div class="card-header">
+                                <h5>Listado articulos para requesición.</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table" id="tableArticulosRequisicion" name="tableArticulosRequisicion" style="width: 100%;">
+                                        <thead class="bg-secondary">
+                                            <tr>
+                                                <td>Serial </td>
+                                                <td>Articulo </td>
+                                                <td>Modelo</td>
+                                                <td>Cantidad </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if rearticulo %}
+                                            {% for rec in rearticulo %}
+                                            <tr>
+                                                <td>{{rec.articulo.serial}}</td>
+                                                <td>{{rec.articulo.nombre}}</td>
+                                                <td>{{rec.articulo.modelo}}</td>
+                                                <td>{{rec.cantidad_pedido}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
                                     <div class="row">
                                         <div class="col-lg-4 offset-lg-7 text-right">
-                                            <a href="{% url 'indexRequision' %}" role="button" class="btn btn-danger">Cancelar</a>
-                                            <button type="submit" id="guardar" name="guardar" class="btn btn-info">Guardar</button>
+                                           <a href="{% url 'aprobarRequision' %}" role="button" class="btn btn-danger">Regresar</a>
                                         </div>
                                     </div>
-                                    <!-- Fin de botones -->
                                     <br>
                                 </div>
                                 <!-- Fin del div de Estado -->
