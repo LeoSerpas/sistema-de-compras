@@ -59,7 +59,7 @@ class reporteOrdenCompra(View):
     def get(self, request, *args, **kwargs):
             template = get_template('reportes/reporte4.html')
             context = {'titulo': 'esto es un pdf',}
-            ordenes = ordenCompra.objects.raw('SELECT ord.ID_OFERTA AS ID, p.NOMBRE, SUM(ord.PRECIO_TOTAL) precio, Count(ord.ID_OFERTA) cuenta FROM "ORDEN DE COMPRA" ord, "OFERTA" o, "EMPRESA PROVEEDORA" p WHERE ord.ID_OFERTA=o.ID AND o.ID_PROVEDORA=p.ID GROUP BY p.NOMBRE, ord.ID_OFERTA ORDER BY precio DESC')
+            ordenes = ordenCompra.objects.raw('SELECT o.ID_PROVEDORA AS ID, p.NOMBRE, SUM(ord.PRECIO_TOTAL) precio, Count(ord_of.OFERTA_ID) cuenta FROM "ORDEN DE COMPRA" ord, "OFERTA" o, "EMPRESA PROVEEDORA" p, "ORDEN DE COMPRA_OFERTAS" ord_of WHERE ord_of.OFERTA_ID=o.ID AND o.ID_PROVEDORA=p.ID AND ord_of.ORDENCOMPRA_ID = ord.ID GROUP BY p.NOMBRE, o.ID_PROVEDORA ORDER BY precio DESC')
             fechas = datetime.now()
             context = {'orden': ordenes, 'fecha': fechas}
             html = template.render(context)
