@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     'apps.compras',
     'apps.articulos',
     'apps.usuarios',
-    'django_seed' ,
-   
+    'apps.reportes',
+    'django_seed',
 ]
 
 MIDDLEWARE = [
@@ -82,14 +82,11 @@ WSGI_APPLICATION = 'sistemaCompras.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'manuel',
-        'USER': 'usuario2',
-        'PASSWORD': 'av16002',        
-        'HOST':'127.0.0.1',
-        'PORT':'1521'
+        'NAME': 'localhost/ORCLCDB.localdomain',
+        'USER': 'alexander',
+        'PASSWORD': 'localhost',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

@@ -72,7 +72,11 @@ class Empleado(models.Model):
         db_table = 'Empleado'
         verbose_name = 'Empleado'
         verbose_name_plural = 'Empleados'
-        default_permissions = []
+        permissions = [
+            ('usuarios_control', 'Manejo de los usuarios'),
+            ('permisos_control', 'Manejo de los permisos')
+        ]
+
 
     def __str__(self):
         return '%s' % (self.primer_nombre)
